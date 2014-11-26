@@ -1,0 +1,3 @@
+#! /bin/bash
+
+erl -hidden -remsh demo@localhost -sname demo_console@localhost

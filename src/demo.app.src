@@ -1,0 +1,12 @@
+{application, demo,
+ [
+  {description, "Deployment Demo EFL 2014"},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { demo_app, []}},
+  {env, []}
+ ]}.
