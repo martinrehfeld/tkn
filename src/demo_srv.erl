@@ -53,7 +53,13 @@ handle_cast(_Msg, State) ->
 terminate(_Reason, _State) ->
     ok.
 
-code_change(_OldVsn, State, _Extra) ->
+code_change(OldVsn, State, Extra) ->
+    ?INFO_MSG("CODE CHANGED in ~p~n"
+              "  OldVsn: ~p~n"
+              "  State: ~p~n"
+              "  Extra: ~p~n",
+              [?MODULE,
+               OldVsn, State, Extra]),
     {ok, State}.
 
 %% ------------------------------------------------
