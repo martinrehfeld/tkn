@@ -8,7 +8,7 @@
 %% API Function Exports
 %% ------------------------------------------------
 
--export([start_link/0]).
+-export([start_link/0, loop/1]).
 
 %% ------------------------------------------------
 %% API Function Definitions
@@ -27,7 +27,7 @@ loop() ->
 loop(Count) ->
     timer:sleep(?INTERVAL),
     announce(Count),
-    loop(Count + 1).
+    ?MODULE:loop(Count + 1).
 
 announce(Count) ->
     ?INFO_MSG(
