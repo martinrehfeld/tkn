@@ -1,3 +1,56 @@
+# Erlang Deployment Options: How To Ship New Code Without Taking Your System Down
+
+This repository contains example code, slides and resources for my talk at Erlang Factory
+Berlin 2014.
+
+## Code
+
+Follow along the commit history to get an idea. Some useful commands:
+
+    # compile the code
+    $ make
+
+    # start the demo app
+    $ ./bin/demo
+
+    # attach a console to the demo app
+    $ ./bin/console
+
+
+    # build a release
+    $ make deploy
+
+    # start the release
+    $ make demo
+
+    # build a upgrade, first edit versions in
+    #   src/demo.app.src
+    #   rel/reltool.config
+    # also change some code and recompile, then
+    $ make upgrade
+
+To apply an upgrade `demo_X` attach a console with `make console`, then run:
+
+    > release_handler:unpack_release("demo_X").
+    > release_handler:install_release("X").
+    > release_handler:make_permanent("X").
+
+## Slides
+
+The slides have been done with [Terminal
+Keynote](https://github.com/fxn/tkn). To set it up, see the instructions from
+the original tkn-README below,
+then start the slideshow with:
+
+    bundle exec ./bin/tkn erlang_deployment.rb
+
+## Resources
+
+* [Rebar Release
+  Handling](https://github.com/rebar/rebar/wiki/Release-handling)
+* [Rebar Release Upgrades](https://github.com/rebar/rebar/wiki/Upgrades)
+* [Erlang Appup Cookbook](http://www.erlang.org/doc/design_principles/appup_cookbook.html)
+
 # Terminal Keynote
 
 ![Terminal Keynote Cover](https://raw.github.com/fxn/tkn/master/screenshots/terminal-keynote-cover.png)
