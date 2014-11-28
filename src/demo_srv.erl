@@ -41,7 +41,7 @@ init([]) ->
 handle_info(ping, #state{count = Count} = State) ->
     announce(Count),
     {noreply, State#state{count = Count + 1}};
-handle_info(_Info, State) ->
+handle_info(_Info, #state{} = State) ->
     {noreply, State}.
 
 handle_call(_Request, _From, State) ->
