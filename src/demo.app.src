@@ -1,7 +1,7 @@
 {application, demo,
  [
   {description, "Deployment Demo EFL 2014"},
-  {vsn, "1"},
+  {vsn, "2"},
   {registered, []},
   {applications, [
                   kernel,

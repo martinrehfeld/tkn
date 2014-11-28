@@ -5,7 +5,7 @@
 -define(INTERVAL, 2000).
 -define(SERVER, ?MODULE).
 
--record(state, {count}).
+-record(state, {count, last_ping}).
 
 %% ------------------------------------------------
 %% API Function Exports
@@ -38,9 +38,11 @@ init([]) ->
         timer:send_interval(?INTERVAL, ping),
     {ok, #state{count = 1}}.
 
-handle_info(ping, #state{count = Count} = State) ->
-    announce(Count),
-    {noreply, State#state{count = Count + 1}};
+handle_info(ping, #state{count = Count,
+                         last_ping = Ts} = State) ->
+    announce(Count, Ts),
+    {noreply, State#state{count = Count + 1,
+                          last_ping = now()}};
 handle_info(_Info, #state{} = State) ->
     {noreply, State}.
 
@@ -60,13 +62,19 @@ code_change(OldVsn, State, Extra) ->
               "  Extra: ~p~n",
               [?MODULE,
                OldVsn, State, Extra]),
-    {ok, State}.
+    {ok, upgrade_state(State)}.
 
 %% ------------------------------------------------
 %% Internal Function Definitions
 %% ------------------------------------------------
 
-announce(Count) ->
+announce(Count, Ts) ->
     ?INFO_MSG(
-        "demo doing its ~p. loop.~n",
-        [Count]).
+        "demo doing its ~p. loop.~n"
+        "last_ping ~p~n",
+        [Count, Ts]).
+
+upgrade_state({state, Count}) ->
+    {state, Count, now()};
+upgrade_state(State) ->
+    State.
